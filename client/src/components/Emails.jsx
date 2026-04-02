@@ -458,6 +458,9 @@ const Emails = () => {
                         ))
                         }
                     </MailList> 
+                    {type === 'inbox' && visibleEmails.length > 0 && (activeTab === 'promotions' || activeTab === 'social') && (
+                        <NoMails message={EMPTY_TABS[activeTab]} />
+                    )}
                     {
                         visibleEmails.length === 0 && (
                             <NoMails message={type === 'inbox' ? EMPTY_TABS[activeTab] : EMPTY_TABS[type]} />
