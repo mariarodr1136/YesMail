@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
-import { useParams, useOutletContext } from 'react-router-dom';
+import { useParams, useOutletContext, useSearchParams } from 'react-router-dom';
 import useApi from '../hooks/useApi';
 import { API_URLS } from '../services/api.urls';
 import { Box, IconButton, List, Checkbox, Menu, MenuItem, Tooltip, Typography, styled } from '@mui/material';
@@ -101,7 +101,15 @@ const Emails = () => {
     const { openDrawer } = useOutletContext();
     const { type } = useParams();
     const { mailboxTick, role, name, bumpMailbox, addToast, removeToast, searchQuery, incrementAcceptedCount, incrementRejectedCount } = useContext(DataContext);
-    const [activeTab, setActiveTab] = useState('primary');
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const normalizeTab = (value) => {
+        const candidate = (value || '').toLowerCase();
+        const allowed = ['primary', 'promotions', 'social', 'updates'];
+        return allowed.includes(candidate) ? candidate : 'primary';
+    };
+
+    const [activeTab, setActiveTab] = useState(() => normalizeTab(searchParams.get('tab')));
     const [selectAllChecked, setSelectAllChecked] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
     const [confettiOrigin, setConfettiOrigin] = useState({ x: 0, y: 0 });
@@ -116,6 +124,13 @@ const Emails = () => {
     const [menuAnchor, setMenuAnchor] = useState(null);
     const getEmailsCall = getEmailsService.call;
     const emailsResponse = getEmailsService.response;
+
+    useEffect(() => {
+        // Preserve the currently selected Inbox tab across navigation by encoding it in the URL.
+        // Example: `/emails/inbox?tab=promotions`
+        if (type !== 'inbox') return;
+        setActiveTab(normalizeTab(searchParams.get('tab')));
+    }, [type, searchParams]);
 
     useEffect(() => {
         getEmailsCall({}, type);
@@ -216,6 +231,17 @@ const Emails = () => {
 
     const closeMenu = () => {
         setMenuAnchor(null);
+    };
+
+    const changeTab = (nextTab) => {
+        const next = normalizeTab(nextTab);
+        setActiveTab(next);
+        setSearchParams((prev) => {
+            const updated = new URLSearchParams(prev);
+            if (next === 'primary') updated.delete('tab');
+            else updated.set('tab', next);
+            return updated;
+        }, { replace: true });
     };
 
     const markAllRead = async () => {
@@ -370,45 +396,45 @@ const Emails = () => {
                         {type === 'inbox' && (
                             <TabsRow>
                                 {activeTab === 'primary' ? (
-                                    <ActiveTab onClick={() => setActiveTab('primary')}>
+                                    <ActiveTab onClick={() => changeTab('primary')}>
                                         <Inbox fontSize="small" />
                                         <Typography sx={{ fontSize: 14 }}>Primary</Typography>
                                     </ActiveTab>
                                 ) : (
-                                    <TabItem onClick={() => setActiveTab('primary')}>
+                                    <TabItem onClick={() => changeTab('primary')}>
                                         <Inbox fontSize="small" />
                                         <Typography sx={{ fontSize: 14 }}>Primary</Typography>
                                     </TabItem>
                                 )}
                                 {activeTab === 'promotions' ? (
-                                    <ActiveTab onClick={() => setActiveTab('promotions')}>
+                                    <ActiveTab onClick={() => changeTab('promotions')}>
                                         <LocalOffer fontSize="small" />
                                         <Typography sx={{ fontSize: 14 }}>Promotions</Typography>
                                     </ActiveTab>
                                 ) : (
-                                    <TabItem onClick={() => setActiveTab('promotions')}>
+                                    <TabItem onClick={() => changeTab('promotions')}>
                                         <LocalOffer fontSize="small" />
                                         <Typography sx={{ fontSize: 14 }}>Promotions</Typography>
                                     </TabItem>
                                 )}
                                 {activeTab === 'social' ? (
-                                    <ActiveTab onClick={() => setActiveTab('social')}>
+                                    <ActiveTab onClick={() => changeTab('social')}>
                                         <PeopleOutline fontSize="small" />
                                         <Typography sx={{ fontSize: 14 }}>Social</Typography>
                                     </ActiveTab>
                                 ) : (
-                                    <TabItem onClick={() => setActiveTab('social')}>
+                                    <TabItem onClick={() => changeTab('social')}>
                                         <PeopleOutline fontSize="small" />
                                         <Typography sx={{ fontSize: 14 }}>Social</Typography>
                                     </TabItem>
                                 )}
                                 {activeTab === 'updates' ? (
-                                    <ActiveTab onClick={() => setActiveTab('updates')}>
+                                    <ActiveTab onClick={() => changeTab('updates')}>
                                         <InfoOutlined fontSize="small" />
                                         <Typography sx={{ fontSize: 14 }}>Updates</Typography>
                                     </ActiveTab>
                                 ) : (
-                                    <TabItem onClick={() => setActiveTab('updates')}>
+                                    <TabItem onClick={() => changeTab('updates')}>
                                         <InfoOutlined fontSize="small" />
                                         <Typography sx={{ fontSize: 14 }}>Updates</Typography>
                                     </TabItem>
