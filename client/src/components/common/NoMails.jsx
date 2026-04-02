@@ -18,7 +18,6 @@ const Content = styled(Box)({
 
 const StyledDivider = styled(Divider)({
     width: '100%',
-    maxWidth: 520,
     marginTop: 26,
     marginBottom: 10
 })
@@ -27,10 +26,10 @@ const NoMails = ({ message }) => {
     return (
         <Component>
             <Content>
-                <Typography sx={{ fontWeight: 400, color: '#3c4043' }}>
+                <Typography sx={{ fontWeight: 500, color: '#3c4043' }}>
                     {message.heading}
                 </Typography>
-                <Typography sx={{ fontWeight: 300, color: '#5f6368', whiteSpace: 'pre-line', marginTop: 0.5 }}>
+                <Typography sx={{ fontWeight: 400, color: '#5f6368', whiteSpace: 'pre-line', marginTop: 0.5 }}>
                     {message.subHeading}
                 </Typography>
             </Content>
