@@ -1,3 +1,5 @@
+import { pickSenderAvatar } from '../utils/senderAvatars';
+
 const STORAGE_KEY = 'offerLibraryUsedIds';
 
 const OFFER_LIBRARY = [
@@ -1118,10 +1120,6 @@ const setUsedIds = (ids) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
 };
 
-const makeAvatar = (name) => {
-    const safe = encodeURIComponent(name);
-    return `https://ui-avatars.com/api/?name=${safe}&background=E9EEF6&color=3C4043&size=64`;
-};
 
 export const resetOfferPool = () => {
     setUsedIds([]);
@@ -1171,7 +1169,7 @@ export const getNextOffer = ({ name, role }) => {
         subject,
         body,
         date: new Date(),
-        image: makeAvatar(pick.company),
+        image: pickSenderAvatar(pick.fromName),
         name: pick.fromName || 'Talent Team',
         starred: false,
         read: false,
