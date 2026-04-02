@@ -10,7 +10,11 @@ The application seeds your inbox with **hyper-personalized offer templates** bas
 
 Live Application: 
 
-<img width="1449" height="700" alt="Screenshot 2026-04-01 at 10 45 20 PM" src="https://github.com/user-attachments/assets/5dd02d2b-ef88-445a-8fd2-0a20d29c3e19" />
+
+
+https://github.com/user-attachments/assets/35e418cc-6aa4-424f-841d-f9110bc65488
+
+
 
 ---
 
