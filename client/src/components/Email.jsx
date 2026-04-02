@@ -14,6 +14,7 @@ const Wrapper = styled(ListItem, {
 })`
     padding: 0 0 0 10px;
     background: #f2f6fc;
+    border-bottom: 1px solid #eceff3;
     cursor: pointer;
     will-change: transform, opacity;
     animation: ${props => props.animate ? 'slideIn 0.45s ease-in-out' : 'none'};
