@@ -1,4 +1,4 @@
-# YesMail 💌
+# YesMail 📩📬
 
 ![Node.js](https://img.shields.io/badge/Node.js-Backend-339933) ![Express](https://img.shields.io/badge/Express-Server-000000) ![React](https://img.shields.io/badge/React-Frontend-61DAFB) ![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248) ![Material UI](https://img.shields.io/badge/MUI-UI_Components-007FFF) ![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animations-0055FF)
 
@@ -6,11 +6,9 @@
 
 The application seeds your inbox with **hyper-personalized offer templates** based on your dream role. It uses an **auto-incrementing mail flow** to deliver new “you’re the one” messages every 8 seconds, providing a small kindness and a reminder of your value in an often brutal job market. 🚀✨
 
----
+Live Application: 
 
-Live Application: [https://yes-mail-demo.onrender.com](https://yes-mail-demo.onrender.com)
-
-*Note: The live application is hosted on Render’s free tier, so the backend may take 1–2 minutes to wake up on the first visit after inactivity.*
+<img width="1449" height="700" alt="Screenshot 2026-04-01 at 10 45 20 PM" src="https://github.com/user-attachments/assets/5dd02d2b-ef88-445a-8fd2-0a20d29c3e19" />
 
 ---
 
@@ -30,13 +28,13 @@ Live Application: [https://yes-mail-demo.onrender.com](https://yes-mail-demo.onr
 
 ### Features:
 
-- **Personalized Offer Library**: 50 handcrafted templates that adapt to your name and desired role with high-conviction, human-centric tones.
+- **Personalized Offer Library**: Handcrafted templates that adapt to your name and desired role with high-conviction, human-centric tones.
 - **Auto-Incrementing Flow**: A background seeding system delivers a fresh "win" every 8 seconds so there is always good news waiting.
 - **Interactive Status Tracking**: Accept or Reject offers to update your status-aware UI with non-clickable chips and colored backgrounds.
 - **Celebratory Animations**: Integrated confetti cannons for acceptances and graceful floating letter fades for rejections.
 - **Real-time Counters**: Header-mounted scoreboards track your total accepted and rejected offers to visualize your momentum.
 - **Toast Notifications**: Instant feedback via snackbars/toasts every time a new offer hits the inbox.
-- **Persistent Seed Logic**: Starts every new session with an immediate 13-email "starter pack" to ensure the inbox never feels empty.
+- **Persistent Seed Logic**: Starts every new session with an immediate email "starter pack" to ensure the inbox never feels empty.
 
 ---
 
@@ -165,4 +163,4 @@ Contributions are welcome to help spread the positivity!
 ---
 
 ### Contact 🌐
-If you have any questions or just want to share a win, reach out at your-email@example.com.
+If you have any questions or just want to share a win, reach out at mrodr.contact@gmail.com
