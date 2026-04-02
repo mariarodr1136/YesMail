@@ -10,7 +10,7 @@ This repo is set up as a **frontend-only demo**: no database required. Mail is s
 
 ---
 
-Demo Video:
+Live Application: https://yesmail-demo.onrender.com
 
 https://github.com/user-attachments/assets/35e418cc-6aa4-424f-841d-f9110bc65488
 
