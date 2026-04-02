@@ -12,8 +12,8 @@ const Component = styled(Box)({
 
 const StyledDivider = styled(Divider)({
     width: '100%',
-    marginTop: 10,
-    marginBottom: 28
+    marginTop: 26,
+    marginBottom: 10
 })
 
 const NoMails = ({ message }) => {
