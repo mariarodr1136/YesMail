@@ -66,6 +66,7 @@ const MailList = styled(List)`
 
 const ScrollArea = styled(Box)`
     overflow-y: auto;
+    overflow-x: hidden;
     flex: 1;
     display: flex;
     flex-direction: column;

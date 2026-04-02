@@ -17,6 +17,8 @@ const Wrapper = styled(ListItem, {
     border-bottom: 1px solid #eceff3;
     cursor: pointer;
     will-change: transform, opacity;
+    max-width: 100%;
+    overflow: hidden;
     animation: ${props => props.animate ? 'slideIn 0.45s ease-in-out' : 'none'};
     & > div {
         display: flex;
@@ -47,8 +49,9 @@ const Wrapper = styled(ListItem, {
 const Actions = styled(Box)`
     margin-left: auto;
     display: flex;
-    gap: 8px;
+    gap: 6px;
     align-items: center;
+    flex-shrink: 0;
 `;
 
 const StatusTag = styled(Box)`
@@ -176,10 +179,13 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
                 : 
                     <StarBorder fontSize="small" style={{ marginRight: 10 }} onClick={() => toggleStarredEmail()} /> 
             }
-            <Box onClick={openEmail} sx={{ display: 'flex', width: '100%', alignItems: 'center' }}>
+            <Box
+                onClick={openEmail}
+                sx={{ display: 'flex', width: '100%', alignItems: 'center', minWidth: 0, overflow: 'hidden' }}
+            >
                 <Typography
                     sx={{
-                        width: 220,
+                        width: 190,
                         fontWeight: isUnread ? 700 : 400,
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
@@ -191,6 +197,7 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
                 <Typography
                     sx={{
                         minWidth: 0,
+                        flex: 1,
                         fontWeight: isUnread ? 700 : 400,
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
