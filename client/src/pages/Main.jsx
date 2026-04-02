@@ -233,6 +233,66 @@ YesMail Engineering`,
             ];
         };
 
+        const makeSocialSeed = () => {
+            const safeName = (name || '').trim() || 'there';
+            const now = Date.now();
+
+            return [
+                {
+                    to: 'you@dreamrole.com',
+                    from: 'hype@yesmail.fake',
+                    name: 'YesMail Hype Squad',
+                    subject: '🛑 Okay, you need to calm down. (You rejected 50 offers?!)',
+                    body: `Hey ${safeName},
+
+We just got an alert from our database and we need to talk.
+
+In the last 24 hours, you have clicked "Reject" on 50 consecutive job offers.
+
+Who do you think you are?! We offered you a C-Suite position at a company that strictly manufactures naps and you said no? We offered you a six-figure salary to just "think about vibes" and you clicked decline?!
+
+Honestly... we respect it.
+
+You know your worth. You are a savage, unyielding negotiator, and you refuse to settle for anything less than absolute perfection. Keep leaving those fictional CEOs on read.
+
+Stay picky,
+The YesMail Hype Squad`,
+                    date: new Date(now - 1000 * 60 * 8),
+                    image: makePromoAvatar('YesMail'),
+                    starred: false,
+                    read: false,
+                    category: 'social',
+                    type: 'inbox',
+                    bin: false
+                },
+                {
+                    to: 'you@dreamrole.com',
+                    from: 'infra@yesmail.fake',
+                    name: 'YesMail Infrastructure Team',
+                    subject: '🐹 Update: Barnaby is exhausted.',
+                    body: `Hey ${safeName},
+
+Just a quick update from YesMail HQ.
+
+Because you’ve been logging in so much to receive your well-deserved fake job offers, our server hamster, Barnaby, is currently running on his wheel at Mach 3. He is sweating tiny, pixelated bullets trying to keep up with your sheer employability.
+
+Look at what you’re doing. You are so hireable that a small rodent is defying the laws of physics to generate enough confetti for your inbox.
+
+Take a break, drink some water, and remember: you are deeply valued (both by us, and by Barnaby).
+
+See you in the inbox,
+The YesMail Infrastructure Team`,
+                    date: new Date(now - 1000 * 60 * 5),
+                    image: makePromoAvatar('YesMail'),
+                    starred: false,
+                    read: false,
+                    category: 'social',
+                    type: 'inbox',
+                    bin: false
+                }
+            ];
+        };
+
         const sendOffer = async ({ notify } = { notify: true }) => {
             const payload = makeOfferEmail();
             if (!payload) return;
@@ -259,6 +319,14 @@ YesMail Engineering`,
             for (const promo of promos) {
                 promo.isNew = false;
                 await API(API_URLS.saveSentEmails, promo);
+                if (isMounted) bumpMailbox();
+            }
+
+            // Seed a couple social emails so the Social tab isn't empty on first load.
+            const socials = makeSocialSeed();
+            for (const social of socials) {
+                social.isNew = false;
+                await API(API_URLS.saveSentEmails, social);
                 if (isMounted) bumpMailbox();
             }
 
