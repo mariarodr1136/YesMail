@@ -1,20 +1,18 @@
 # YesMail 📩
 
-![Node.js](https://img.shields.io/badge/Node.js-Backend-339933) ![Express](https://img.shields.io/badge/Express-Server-000000) ![React](https://img.shields.io/badge/React-Frontend-61DAFB) ![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248) ![Material UI](https://img.shields.io/badge/MUI-UI_Components-007FFF) ![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animations-0055FF)
+![React](https://img.shields.io/badge/React-Frontend-61DAFB) ![MUI](https://img.shields.io/badge/MUI-UI_Components-007FFF) ![React Router](https://img.shields.io/badge/React_Router-Routing-CA4245) ![Axios](https://img.shields.io/badge/Axios-HTTP-5A29E4) ![Local Mode](https://img.shields.io/badge/Local_Mode-No_Backend-6B7280) ![Render](https://img.shields.io/badge/Render-Deployment-46E3B7)
 
-**YesMail** is a feel-good **Gmail simulation** built for job seekers tired of rejection emails. This project reimagines the modern inbox as a high-conviction "offer machine." By combining a **React frontend** with a **Node/Express backend**, YesMail creates a playful sanctuary where every notification is a win.
+**YesMail** is a feel-good **Gmail simulation** built for job seekers tired of rejection emails. It reimagines the modern inbox as a high-conviction "offer machine" where every notification is a win.
 
-The application seeds your inbox with **hyper-personalized offer templates** based on your dream role. It uses an **auto-incrementing mail flow** to deliver new “you’re the one” messages every 8 seconds, providing a small kindness and a reminder of your value in an often brutal job market. 
+The app seeds your inbox with **hyper-personalized offer templates** based on your name and dream role, then delivers a new “you’re the one” message every **8 seconds**.
+
+This repo is set up as a **frontend-only demo**: no database required. Mail is stored in-memory in the browser via a local-mode API.
 
 ---
 
-Live Application: 
-
-
+Demo Video:
 
 https://github.com/user-attachments/assets/35e418cc-6aa4-424f-841d-f9110bc65488
-
-
 
 ---
 
@@ -32,129 +30,104 @@ https://github.com/user-attachments/assets/35e418cc-6aa4-424f-841d-f9110bc65488
 
 ---
 
-### Features:
-
-- **Personalized Offer Library**: Handcrafted templates that adapt to your name and desired role with high-conviction, human-centric tones.
-- **Auto-Incrementing Flow**: A background seeding system delivers a fresh "win" every 8 seconds so there is always good news waiting.
-- **Interactive Status Tracking**: Accept or Reject offers to update your status-aware UI with non-clickable chips and colored backgrounds.
-- **Celebratory Animations**: Integrated confetti cannons for acceptances and graceful floating letter fades for rejections.
-- **Real-time Counters**: Header-mounted scoreboards track your total accepted and rejected offers to visualize your momentum.
-- **Toast Notifications**: Instant feedback via snackbars/toasts every time a new offer hits the inbox.
-- **Persistent Seed Logic**: Starts every new session with an immediate email "starter pack" to ensure the inbox never feels empty.
-
----
-
-### Technology Stack:
-
-#### Frontend (Interactive UI + Experience)
-- **React** (Context API for global state management)
-- **Material-UI (MUI)** (Professional dashboard components and layout)
-- **Framer Motion / Canvas Confetti** (Immersive animations and celebrations)
-- **React Router** (Declarative routing for login and inbox views)
-- **Axios** (API client for backend communication)
-
-#### Backend (Logic + Seeding)
-- **Node.js & Express** (Server-side architecture and RESTful routes)
-- **MongoDB + Mongoose** (NoSQL persistence for user profiles)
-- **Seed Logic** (Deterministic template cycling and ID tracking)
-
-#### Data Layer & DevOps
-- **Local Storage** (Tracking used template IDs to prevent duplicates)
-- **Render** (Cloud deployment for both Client and Server)
-- **Dotenv** (Environment-based configuration for secrets)
+### Features
+- **Personalized Offer Library**: Handcrafted templates that adapt to your name and desired role.
+- **Auto-Incrementing Flow**: A new “win” arrives every 8 seconds.
+- **Inbox Tabs**: Primary, Promotions, Social, Updates (with seeded emails per tab).
+- **Interactive Status Tracking**: Accept/Reject offers to update status-aware UI with colored backgrounds and chips.
+- **Celebration Animations**: Confetti bursts on acceptance.
+- **Real-time Counters**: Header counters for Accepted/Rejected totals.
+- **Search**: Search across sender, subject, and body.
 
 ---
 
-### Getting Started:
+### Technology Stack
+
+#### Frontend
+- **React** (Context API for global state)
+- **Material UI (MUI)** (layout/components/icons)
+- **React Router** (routing for login/inbox/detail views)
+- **Axios** (optional HTTP client; demo runs in local mode)
+
+#### Demo Storage + Deployment
+- **Local-mode API (in-browser memory store)** (no backend required)
+- **Local Storage** (prevents repeating offer templates per session)
+- **Render Static Site** (free hosting for the demo)
+
+---
+
+### Getting Started
 
 #### Prerequisites
 - Node.js (v16+)
-- MongoDB (Local or Atlas)
 - Git
 
 #### Installation
-
 1. **Clone the repository**:
    ```bash
    git clone https://github.com/yourusername/YesMail.git
    cd YesMail
    ```
 
-2. **Set up the Backend**:
-   ```bash
-   # Install root dependencies
-   npm install
-   # Create a .env file with your MONGO_URI
-   touch .env
-   # Start the server
-   npm run dev
-   ```
-
-3. **Set up the Frontend**:
+2. **Run the frontend**:
    ```bash
    cd client
    npm install
    npm start
    ```
 
-Run the frontend at [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
 ### Project Structure
-```
-yes-mail/
-├── client/                     # React frontend
+```text
+yesmail/
+├── client/                     # React app
 │   ├── public/                 # Static assets
 │   └── src/
 │       ├── assets/             # Branding and images
-│       ├── components/         # MUI Layout components
-│       ├── context/            # DataProvider.jsx (Global State)
-│       ├── data/               # 50+ Offer Templates
-│       ├── services/           # api.js (Axios configuration)
-│       └── pages/              # Login, Inbox, View Details
+│       ├── components/         # UI components (Header, Email list, ViewEmail, etc.)
+│       ├── context/            # DataProvider (global state)
+│       ├── data/               # Offer templates library
+│       ├── services/           # API layer (local-mode store + optional HTTP)
+│       └── pages/              # Login, Main
 │
-├── config/                     # Database configuration
-├── controllers/                # Request handling logic
-├── models/                     # MongoDB User schemas
-├── routes/                     # Express API endpoints
-├── .env                        # Environment variables
-└── package.json                # Project dependencies
+├── render.yaml                 # Render blueprint (static site)
+└── README.md
 ```
 
 ### 📊 Core Components
 | Component | What It Covers |
 | --- | --- |
-| Inbox List | Real-time stream of personalized offers with status indicators |
-| Offer Viewer | Detailed view of the "High-Conviction" letter with action buttons |
-| Momentum Tracker | Header counters for Accepted/Rejected tallies |
-| Celebration Layer | Overlay for confetti and "Floating Letter" reply animations |
-| SideBar Navigation | Categories for Inbox, Sent, Drafts, and Trash simulation |
-| Compose Modal | A functional UI for "writing" your own wins |
+| Inbox List | Real-time stream of offers with read/unread styling, preview snippets, and status indicators |
+| Offer Viewer | Full letter view with accept/reject actions (offers only) |
+| Momentum Tracker | Header counters for accepted/rejected totals |
+| Celebration Layer | Confetti overlay for acceptances |
+| SideBar Navigation | Gmail-style navigation and labels |
 
 ---
 
 ### 🧭 Experience & UI
-- **Gmail Simulation**: Familiar layout to lower the learning curve and increase immersion.
-- **High-Conviction Copy**: Messaging designed to combat "rejection fatigue" with specific praise.
-- **Visual Feedback**: Success/Warning color coding for accepted or rejected offers.
-- **Dynamic Seeding**: Logic that ensures you never see the same template twice in a single session.
+- **Gmail Simulation**: Familiar layout to make it instantly usable.
+- **High-Conviction Copy**: Messaging designed to combat “rejection fatigue.”
+- **Clear Visual Feedback**: Accepted/rejected states stay visible in the inbox and labels.
 
 ---
 
 ### 🧪 Logic & Flow
-- **The Initial Seed**: Upon login, the DataProvider triggers an initial batch of 13 emails fetched from the template library.
-- **The 8-Second Loop**: A setInterval hook in the frontend context polls the backend/template service to push a new object into the mail state.
-- **Template Personalization**: Templates use string interpolation to inject {Name} and {Role} dynamically based on the logged-in user profile.
-- **Animation Trigger**: The "Accept" action triggers a canvas-confetti burst while "Reject" triggers a Framer Motion animation simulating a letter being mailed away.
+- **Initial Seed**: On first login, the app seeds a starter set of emails (including Promotions/Social seeds).
+- **8-Second Loop**: A timer adds a new offer into the inbox every 8 seconds.
+- **Template Personalization**: Templates inject your name and desired role dynamically.
+- **Local Demo Mode**: When `REACT_APP_LOCAL_MODE=true`, all mail actions are handled in-browser.
 
 ---
 
 ### Next Steps
-- [ ] Persistence: Ensure Accepted/Rejected counts survive page reloads via DB updates.
-- [ ] Real Mail Integration: Wire up the "Compose" feature to an actual SMTP service (Nodemailer).
-- [ ] A11y: Improve screen reader support for the immersive celebration animations.
-- [ ] Custom Templates: Allow users to upload their own dream offer letters to the pool.
+- [ ] Persist accepted/rejected counters across refresh (Local Storage).
+- [ ] Add more seeded tabs (Updates) and more “fun” system-style emails.
+- [ ] Add an “Export wins” button (download accepted offers as a PDF or shareable image).
+- [ ] Accessibility pass (keyboard navigation + ARIA for mailbox actions).
 
 ---
 
@@ -162,7 +135,7 @@ yes-mail/
 Contributions are welcome to help spread the positivity!
 1. Fork the repository.
 2. Create your feature branch (`git checkout -b feat/new-template`).
-3. Commit your changes (`git commit -m 'Add new high-energy template'`).
+3. Commit your changes (`git commit -m 'Add new template'`).
 4. Push to the branch (`git push origin feat/new-template`).
 5. Open a Pull Request.
 
@@ -170,3 +143,4 @@ Contributions are welcome to help spread the positivity!
 
 ### Contact 🌐
 If you have any questions or just want to share a win, reach out at mrodr.contact@gmail.com
+
