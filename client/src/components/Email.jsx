@@ -29,10 +29,15 @@ const Wrapper = styled(ListItem, {
     }
     .row-actions {
         opacity: 0;
-        transition: opacity 0.2s ease-in-out;
+        pointer-events: none;
+        max-width: 0;
+        overflow: hidden;
+        transition: opacity 0.18s ease-in-out, max-width 0.22s ease-in-out;
     }
     &:hover .row-actions {
         opacity: 1;
+        pointer-events: auto;
+        max-width: 520px;
     }
     @keyframes slideIn {
         0% {
@@ -51,7 +56,7 @@ const Actions = styled(Box)`
     display: flex;
     gap: 6px;
     align-items: center;
-    flex-shrink: 0;
+    flex: 0 1 auto;
 `;
 
 const StatusTag = styled(Box)`
