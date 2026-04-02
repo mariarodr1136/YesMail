@@ -39,6 +39,14 @@ const Wrapper = styled(ListItem, {
         pointer-events: auto;
         max-width: 520px;
     }
+    .row-meta {
+        opacity: 1;
+        transition: opacity 0.12s ease-in-out;
+    }
+    &:hover .row-meta {
+        opacity: 0;
+        pointer-events: none;
+    }
     @keyframes slideIn {
         0% {
             opacity: 0;
@@ -57,6 +65,14 @@ const Actions = styled(Box)`
     gap: 6px;
     align-items: center;
     flex: 0 1 auto;
+`;
+
+const RightMeta = styled(Box)`
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
 `;
 
 const StatusTag = styled(Box)`
@@ -98,11 +114,12 @@ const RejectButton = styled(ActionButton)`
 `;
 
 const Date = styled(Typography)({
-    marginLeft: 'auto',
-    marginRight: 20,
     fontSize: 12,
-    color: '#5F6368'
-})
+    color: '#5F6368',
+    minWidth: 54,
+    textAlign: 'right',
+    marginRight: 14
+});
 
 const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAccept, onReject }) => {
     const toggleStarredEmailService = useApi(API_URLS.toggleStarredMails);
@@ -217,12 +234,19 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
                         </Box>
                     )}
                 </Typography>
-                <Actions className="row-actions" onClick={(e) => e.stopPropagation()}>
+                <RightMeta className="row-meta">
                     {(email.status === 'accepted' || email.status === 'rejected') ? (
                         <StatusTag type={email.status}>
                             {email.status === 'accepted' ? 'Accepted' : 'Rejected'}
                         </StatusTag>
-                    ) : isOfferEmail ? (
+                    ) : null}
+                    <Date sx={{ fontWeight: isUnread ? 700 : 400 }}>
+                        {(new window.Date(email.date)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </Date>
+                </RightMeta>
+
+                <Actions className="row-actions" onClick={(e) => e.stopPropagation()}>
+                    {(email.status === 'accepted' || email.status === 'rejected') ? null : isOfferEmail ? (
                         <>
                             <AcceptButton variant="outlined" size="small" onClick={(e) => onAccept?.(email._id, e)}>
                                 Accept
@@ -242,9 +266,6 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
                             <MarkEmailUnread fontSize="small" />
                         </IconButton>
                     </Tooltip>
-                    <Date>
-                        {(new window.Date(email.date)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                    </Date>
                 </Actions>
             </Box>
         </Wrapper>
