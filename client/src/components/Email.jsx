@@ -186,6 +186,7 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
                 <Typography
                     sx={{
                         width: 190,
+                        flexShrink: 0,
                         fontWeight: isUnread ? 700 : 400,
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
