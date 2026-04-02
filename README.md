@@ -4,7 +4,7 @@
 
 **YesMail** is a feel-good **Gmail simulation** built for job seekers tired of rejection emails. This project reimagines the modern inbox as a high-conviction "offer machine." By combining a **React frontend** with a **Node/Express backend**, YesMail creates a playful sanctuary where every notification is a win.
 
-The application seeds your inbox with **hyper-personalized offer templates** based on your dream role. It uses an **auto-incrementing mail flow** to deliver new “you’re the one” messages every 8 seconds, providing a small kindness and a reminder of your value in an often brutal job market. 🚀✨
+The application seeds your inbox with **hyper-personalized offer templates** based on your dream role. It uses an **auto-incrementing mail flow** to deliver new “you’re the one” messages every 8 seconds, providing a small kindness and a reminder of your value in an often brutal job market. 
 
 Live Application: 
 
