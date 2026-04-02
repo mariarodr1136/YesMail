@@ -103,11 +103,6 @@ const Header = ({ toggleDrawer }) => {
                                         {name}
                                     </Typography>
                                 )}
-                                {role && (
-                                    <Typography sx={{ fontSize: 12, color: '#6b7280', fontWeight: 500 }}>
-                                        {role}
-                                    </Typography>
-                                )}
                             </Box>
                             <Box sx={{ width: 52, height: 52, borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
                                 <Box
