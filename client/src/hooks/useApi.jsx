@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import API from '../services/api';
 
 const useApi = (urlObject) => {
@@ -6,7 +6,7 @@ const useApi = (urlObject) => {
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const call = async (payload, type = '') => {
+    const call = useCallback(async (payload, type = '') => {
         setIsLoading(true);
         setError("");
         
@@ -18,7 +18,7 @@ const useApi = (urlObject) => {
         } finally {
             setIsLoading(false);
         }
-    }
+    }, [urlObject]);
 
     return { call, response, error, isLoading };
 }

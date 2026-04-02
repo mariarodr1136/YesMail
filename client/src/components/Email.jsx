@@ -103,6 +103,8 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
     const navigate = useNavigate();
     const isInboxLike = email.bin === true || ['inbox', 'accepted', 'rejected'].includes(email.type);
     const fromName = email.name || email.from?.split('@')[0] || 'Recruiter';
+    const category = email.category || 'primary';
+    const isOfferEmail = email.type === 'inbox' && category === 'primary';
     const [animate, setAnimate] = useState(Boolean(email.isNew));
 
     useEffect(() => {
@@ -178,7 +180,7 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
                         <StatusTag type={email.status}>
                             {email.status === 'accepted' ? 'Accepted' : 'Rejected'}
                         </StatusTag>
-                    ) : (
+                    ) : isOfferEmail ? (
                         <>
                             <AcceptButton variant="outlined" size="small" onClick={(e) => onAccept?.(email._id, e)}>
                                 Accept
@@ -187,7 +189,7 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
                                 Decline
                             </RejectButton>
                         </>
-                    )}
+                    ) : null}
                     <Tooltip title="Trash" arrow componentsProps={{ tooltip: { sx: { borderRadius: '5px' } } }}>
                         <IconButton size="small" onClick={handleTrash}>
                             <DeleteOutline fontSize="small" />

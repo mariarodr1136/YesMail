@@ -153,6 +153,8 @@ const ViewEmail = () => {
     const { state } = useLocation();
     const { email } = state;
     const isInbox = email.type === 'inbox';
+    const category = email.category || 'primary';
+    const isOfferEmail = isInbox && category === 'primary';
     const navigate = useNavigate();
     const [showConfetti, setShowConfetti] = useState(false);
     const [confettiOrigin, setConfettiOrigin] = useState({ x: 0, y: 0 });
@@ -275,7 +277,12 @@ const ViewEmail = () => {
                         </Tooltip>
                     </ActionBar>
                 </IconWrapper>
-                <Subject>{email.subject} <Indicator component="span">Inbox</Indicator></Subject>
+                <Subject>
+                    {email.subject}{' '}
+                    {isInbox ? (
+                        <Indicator component="span">{category.charAt(0).toUpperCase() + category.slice(1)}</Indicator>
+                    ) : null}
+                </Subject>
                 <Box style={{ display: 'flex' }}>
                     <Image src={email.image || emptyProfilePic} alt="profile" />
                     <Container>
@@ -304,7 +311,7 @@ const ViewEmail = () => {
                         <Typography style={{ marginTop: 20, whiteSpace: 'pre-line', fontSize: 13 }}>
                             {email.body}
                         </Typography>
-                        {isInbox && (
+                        {isOfferEmail && (
                             <BottomActions>
                                 {email.status === 'accepted' ? (
                                     <StatusChip status="accepted">Accepted</StatusChip>

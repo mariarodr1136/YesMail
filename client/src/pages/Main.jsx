@@ -121,8 +121,6 @@ const Main = () => {
     const [nameInput, setNameInput] = useState('');
     const NEW_EMAIL_INTERVAL_MS = 8000;
 
-    const makeOfferEmail = () => getNextOffer({ name, role });
-
     const toggleDrawer = () => {
         setOpenDrawer(prevState => !prevState);
     }
@@ -131,6 +129,109 @@ const Main = () => {
         if (!role) return;
 
         let isMounted = true;
+
+        const makeOfferEmail = () => getNextOffer({ name, role });
+        const makePromoAvatar = (label) => {
+            const safe = encodeURIComponent(label);
+            return `https://ui-avatars.com/api/?name=${safe}&background=FFF4E5&color=5F4339&size=64`;
+        };
+
+        const makePromotionsSeed = () => {
+            const safeName = (name || '').trim() || 'there';
+            const now = Date.now();
+
+            return [
+                {
+                    to: 'you@dreamrole.com',
+                    from: 'platinum@yesmail.fake',
+                    name: 'YesMail Monetization Team',
+                    subject: '👑 Introducing YesMail Platinum (Please don\'t buy this)',
+                    body: `Hi ${safeName},
+
+Are you tired of just getting digital validation every 8 seconds? Do you want to take your completely fabricated career success into the physical realm?
+
+Enter YesMail Platinum.
+
+For the completely reasonable price of $49,999 a month, our new premium tier includes:
+
+Physical Confetti Cannons: We will mail an actual, spring-loaded glitter bomb to your house every time you click "Accept."
+
+The "Reverse Uno" Button: Automatically sends a fake rejection letter back to the last real company that rejected you. (e.g., "Unfortunately, ${safeName} has decided to move forward with a company that actually responds to emails.")
+
+A Real Marching Band: They will stand on your lawn and play "We Are The Champions" on a loop until your neighbors call the authorities.
+
+Upgrade today! (Disclaimer: Please do not upgrade today, we do not have a marching band).
+
+Warmly,
+The YesMail Monetization Team`,
+                    date: new Date(now - 1000 * 60 * 9),
+                    image: makePromoAvatar('YesMail'),
+                    starred: false,
+                    read: false,
+                    category: 'promotions',
+                    type: 'inbox',
+                    bin: false
+                },
+                {
+                    to: 'you@dreamrole.com',
+                    from: 'product@yesmail.fake',
+                    name: 'YesMail Product Team',
+                    subject: '🆕 New Update: Choose your Hiring Manager\'s personality!',
+                    body: `Hi ${safeName},
+
+We noticed you’ve been getting a lot of offers lately. But who are they coming from?
+
+Today, we’re thrilled to announce Boss Personas! You can now customize the tone of the fictional hiring managers begging you to work for them.
+
+New Personas include:
+
+The Desperate Startup Bro: "Bro. Bro please. We have cold brew on tap and beanbag chairs. I will give you 40% equity in a company that makes smart-socks. Pls."
+
+The Weeping Fortune 500 CEO: "I am literally crying right now looking at your resume. I fired the board of directors so you can have their chairs."
+
+A Golden Retriever in a Tie: "BARK! (You are hired) BARK! (Good boy/girl!)"
+
+Log in now to update your preferences and let the aggressively weird validation wash over you.
+
+Cheers,
+The YesMail Product Team`,
+                    date: new Date(now - 1000 * 60 * 6),
+                    image: makePromoAvatar('YesMail'),
+                    starred: false,
+                    read: false,
+                    category: 'promotions',
+                    type: 'inbox',
+                    bin: false
+                },
+                {
+                    to: 'you@dreamrole.com',
+                    from: 'engineering@yesmail.fake',
+                    name: 'YesMail Engineering',
+                    subject: '⚡ FLASH SALE: Get 500% More Fake Job Offers!',
+                    body: `Hi ${safeName},
+
+We’re having a massive, unprecedented, once-in-a-lifetime FLASH SALE!
+
+Normally, YesMail delivers a life-changing, high-paying, incredibly flattering job offer to your inbox every 8 seconds. But for the next 24 hours? We are slashing our prices to ZERO SECONDS.
+
+That's right. If you click the link below, we will temporarily remove the rate limit on our server. You will receive 4,000 job offers per minute. Your browser will crash. Your fan will sound like a jet engine taking off. You will have so much momentum that you will transcend the concept of employment entirely.
+
+Are you ready to break your computer with positivity?
+
+[Click Here to Unleash the Offer Avalanche]
+
+Best of luck,
+YesMail Engineering`,
+                    date: new Date(now - 1000 * 60 * 3),
+                    image: makePromoAvatar('YesMail'),
+                    starred: false,
+                    read: false,
+                    category: 'promotions',
+                    type: 'inbox',
+                    bin: false
+                }
+            ];
+        };
 
         const sendOffer = async ({ notify } = { notify: true }) => {
             const payload = makeOfferEmail();
@@ -152,6 +253,14 @@ const Main = () => {
 
         const seedInbox = async () => {
             const seedCount = 13;
+
+            // Seed a few promo emails so the Promotions tab isn't empty on first load.
+            const promos = makePromotionsSeed();
+            for (const promo of promos) {
+                promo.isNew = false;
+                await API(API_URLS.saveSentEmails, promo);
+                if (isMounted) bumpMailbox();
+            }
 
             for (let i = 0; i < seedCount; i += 1) {
                 const payload = makeOfferEmail();
@@ -191,7 +300,7 @@ const Main = () => {
             isMounted = false;
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
         };
-    }, [role, bumpMailbox, addToast, removeToast, NEW_EMAIL_INTERVAL_MS]);
+    }, [role, name, bumpMailbox, addToast, removeToast]);
 
     const confirmRole = () => {
         if (!roleInput.trim() || !nameInput.trim()) return;

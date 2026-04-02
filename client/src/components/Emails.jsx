@@ -114,18 +114,21 @@ const Emails = () => {
     const acceptOfferService = useApi(API_URLS.acceptOffer);
     const rejectOfferService = useApi(API_URLS.rejectOffer);
     const [menuAnchor, setMenuAnchor] = useState(null);
+    const getEmailsCall = getEmailsService.call;
+    const emailsResponse = getEmailsService.response;
 
     useEffect(() => {
-        getEmailsService.call({}, type);
-    }, [type, starredEmail, mailboxTick])
+        getEmailsCall({}, type);
+    }, [type, starredEmail, mailboxTick, getEmailsCall])
 
     const visibleEmails = useMemo(() => {
-        const emails = getEmailsService?.response ? [...getEmailsService.response] : [];
+        const emails = emailsResponse ? [...emailsResponse] : [];
         const sorted = emails.sort((a, b) => new Date(b.date) - new Date(a.date));
         const filteredByTab = (() => {
             if (type !== 'inbox') return sorted;
-            if (activeTab === 'primary') return sorted;
-            return sorted.filter((email) => (email.category || 'primary') === activeTab);
+            const category = (email) => (email.category || 'primary');
+            if (activeTab === 'primary') return sorted.filter((email) => category(email) === 'primary');
+            return sorted.filter((email) => category(email) === activeTab);
         })();
 
         const query = searchQuery.trim().toLowerCase();
@@ -145,7 +148,7 @@ const Emails = () => {
 
             return haystack.includes(query);
         });
-    }, [getEmailsService?.response, type, activeTab, searchQuery]);
+    }, [emailsResponse, type, activeTab, searchQuery]);
 
     useEffect(() => {
         const isAllSelected = selectedEmails.length > 0 && selectedEmails.length === visibleEmails.length;

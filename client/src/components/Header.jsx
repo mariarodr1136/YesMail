@@ -1,8 +1,7 @@
 
 
 import { AppBar, Toolbar, Box, InputBase, Typography, styled } from '@mui/material';
-import { Menu as MenuIcon, Tune, HelpOutlineOutlined, SettingsOutlined, 
-    AppsOutlined, Search } from '@mui/icons-material'
+import { Menu as MenuIcon, Tune, Search } from '@mui/icons-material'
 
 import { useContext } from 'react';
 import { DataContext } from '../context/DataProvider';
