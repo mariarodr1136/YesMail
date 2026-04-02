@@ -12,8 +12,7 @@ const Component = styled(Box)({
 
 const Content = styled(Box)({
     width: '100%',
-    maxWidth: 520,
-    textAlign: 'left'
+    maxWidth: 520
 });
 
 const StyledDivider = styled(Divider)({
@@ -23,9 +22,10 @@ const StyledDivider = styled(Divider)({
 })
 
 const NoMails = ({ message }) => {
+    const align = message?.align || 'left';
     return (
         <Component>
-            <Content>
+            <Content sx={{ textAlign: align }}>
                 <Typography sx={{ fontWeight: 500, color: '#3c4043' }}>
                     {message.heading}
                 </Typography>

@@ -6,7 +6,8 @@ export const VIEWS = {
     inbox: 'inbox',
     starred: 'starred',
     sent: 'sent',
-    drafts: 'drafts'
+    drafts: 'drafts',
+    spam: 'spam'
 }
 
 export const EMPTY_TABS = {
@@ -27,12 +28,19 @@ export const EMPTY_TABS = {
         subHeading: "Stars let you give messages a special status to make them easier to find. To star a message, click on the star outline beside any message or conversation."
     },
     sent: {
-        heading: 'No sent messages!',
-        subHeading: 'Send one now!'
+        heading: 'No sent message',
+        subHeading: '',
+        align: 'center'
     },
     bin: {
         heading: 'No conversations in Trash.',
-        subHeading: ''
+        subHeading: '',
+        align: 'center'
+    },
+    spam: {
+        heading: 'Hooray, no spam here!',
+        subHeading: '',
+        align: 'center'
     },
     promotions: {
         heading: 'Your Promotions tab is empty.',

@@ -1,7 +1,7 @@
 
 
 import { routes } from "../routes/routes"
-import { Photo, StarOutline, SendOutlined, InsertDriveFileOutlined, DeleteOutlined } from '@mui/icons-material';
+import { Photo, StarOutline, SendOutlined, InsertDriveFileOutlined, DeleteOutlined, DoNotDisturbOnOutlined } from '@mui/icons-material';
 
 export const SIDEBAR_DATA = [
     {
@@ -26,6 +26,12 @@ export const SIDEBAR_DATA = [
         name: 'drafts',
         title: 'Drafts',
         icon: InsertDriveFileOutlined,
+        path: routes.emails.path
+    },
+    {
+        name: 'spam',
+        title: 'Spam',
+        icon: DoNotDisturbOnOutlined,
         path: routes.emails.path
     },
     {
