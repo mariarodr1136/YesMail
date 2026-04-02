@@ -1,4 +1,5 @@
 # YesMail
+![Node.js](https://img.shields.io/badge/Node.js-Backend-339933) ![Express](https://img.shields.io/badge/Express-Server-000000) ![React](https://img.shields.io/badge/React-Frontend-61DAFB) ![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248)
 
 YesMail is a feel-good Gmail simulation built for folks who are tired of rejection emails. The project reimagines the inbox as an offer machine: after you log in with your dream job and personal details, the app seeds your inbox with hyper-personalized, high-conviction offer templates and keeps adding new ones so you always have good news to read.
 
