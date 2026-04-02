@@ -44,7 +44,7 @@ export const EMPTY_TABS = {
     },
     updates: {
         heading: 'Your Updates tab is empty.',
-        subHeading: 'Automated messages that may not need immediate attention will be shown here. These can include confirmations, notifications, statements, and reminders.\n\nMoving messages in or out of Updates helps Gmail learn which messages you want here.'
+        subHeading: 'Automated messages that may not need immediate attention will be shown here. These can include confirmations, notifications, statements, and reminders.\n\nMoving messages in or out of Updates helps YesMail learn which messages you want here.'
     },
     accepted: {
         heading: 'No accepted offers yet.',
