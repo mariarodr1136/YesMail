@@ -178,12 +178,14 @@ const ViewEmail = () => {
             confettiTimeout.current = null;
         }, CELEBRATION_MS);
         email.status = 'accepted';
+        email.read = true;
     };
 
     const rejectOffer = async () => {
         await API(API_URLS.rejectOffer, { id: email._id });
         incrementRejectedCount();
         email.status = 'rejected';
+        email.read = true;
     };
 
     const moveToBin = async () => {

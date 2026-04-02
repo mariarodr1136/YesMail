@@ -66,6 +66,7 @@ const localApi = async (urlObject, payload, type) => {
             const email = memoryStore.find((item) => item._id === payload?.id);
             if (email) {
                 email.status = 'accepted';
+                email.read = true;
             }
             return { data: 'accepted' };
         }
@@ -73,6 +74,7 @@ const localApi = async (urlObject, payload, type) => {
             const email = memoryStore.find((item) => item._id === payload?.id);
             if (email) {
                 email.status = 'rejected';
+                email.read = true;
             }
             return { data: 'rejected' };
         }
