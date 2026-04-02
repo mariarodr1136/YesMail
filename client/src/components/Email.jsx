@@ -32,7 +32,7 @@ const Wrapper = styled(ListItem, {
         pointer-events: none;
         max-width: 0;
         overflow: hidden;
-        transition: opacity 0.18s ease-in-out, max-width 0.22s ease-in-out;
+        transition: opacity 0.18s ease-in-out;
     }
     &:hover .row-actions {
         opacity: 1;
