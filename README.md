@@ -6,6 +6,8 @@
 
 The application seeds your inbox with **hyper-personalized offer templates** based on your dream role. It uses an **auto-incrementing mail flow** to deliver new “you’re the one” messages every 8 seconds, providing a small kindness and a reminder of your value in an often brutal job market. 
 
+---
+
 Live Application: 
 
 <img width="1449" height="700" alt="Screenshot 2026-04-01 at 10 45 20 PM" src="https://github.com/user-attachments/assets/5dd02d2b-ef88-445a-8fd2-0a20d29c3e19" />
