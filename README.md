@@ -1,84 +1,47 @@
-# Gmail-Clone
+# YesMail
 
-![Screenshot 2023-12-30 194612](https://github.com/sheelganvir/Gmail-Clone/assets/128175450/84369c5d-97c0-438c-ac6d-83df98268aa5)
+YesMail is a feel-good Gmail simulation built for folks who are tired of rejection emails. The project reimagines the inbox as an offer machine: after you log in with your dream job and personal details, the app seeds your inbox with hyper-personalized, high-conviction offer templates and keeps adding new ones so you always have good news to read.
 
+## Story
+The job market has been brutal—everyone is applying to dozens of roles, sitting in rejection limbo, and refreshing their inboxes hoping for a positive answer. YesMail flips that narrative: instead of punishment, it drops you in a playful simulation that mimics receiving real offers. You log in or create an account (email, password, desired role), the client seeds 13 introductory offer emails, and every 8 seconds the backend/seed system delivers another high-energy “you’re the one” message. It’s a small kindness and a reminder that you deserve wins, even if the offers are fictional.
 
-## Overview
+## Key features
+- **Personalized offer library** – 50 handcrafted letter templates adapt to the role, candidate name, and context, keeping the tone high-conviction, human, and specific.
+- **Auto-incrementing mail flow** – After login, the inbox receives a fresh email every 8 seconds (you can still refresh manually) so there’s always a new win to open.
+- **Toast notifications** – Each new email triggers a toast, and accepting or rejecting a letter produces celebratory/confetti or graceful messaging.
+- **Status-aware UI** – Accept/reject actions mark emails with a colored background and a non-clickable status chip without removing them from the inbox.
+- **Story-driven animations** – Confetti celebrates every acceptance (kept consistent even with rapid clicks) while rejects get a floating letter animation that fades out like a reply.
+- **Counting scores** – Header counters keep track of how many offers you’ve accepted and rejected, so you can feel the momentum.
 
-Gmail-Clone is a complete working MERN stack project developed with the assistance of the Material UI framework. This project replicates the core features of Gmail, providing users with a seamless and responsive email experience.
+## Technical stack
+- Node/Express server with `database/db.js` powering a MongoDB connection (credentials live in `.env`).
+- React client scaffolded with Create React App under `client/`, featuring Material‑UI components, React Router, and a local API mock (`client/services/api.js`).
+- State managed via React context (`client/src/context/DataProvider.jsx`), and `getNextOffer` cycles through the template pool while tracking used IDs in localStorage.
+- Assets/data (branding, letter templates) live under `client/src/assets` and `client/src/data`, while services/controllers keep the mock backend deterministic.
 
-## Technologies Used
-
-- **MongoDB:** Efficient and scalable data storage for handling user emails and related information.
-- **Express.js:** Building robust APIs for communication between the frontend and backend.
-- **React.js:** Creating a dynamic and interactive user interface for composing, sending, receiving, and managing emails.
-- **Node.js:** Powering the backend and facilitating server-side logic.
-- **Material UI:** Designing a modern and intuitive user interface for a consistent user experience.
-
-## Features
-
-- **Real-Time Updates:** Integrated WebSocket technology for instant notifications of new emails and mailbox changes.
-- **User Authentication:** Ensured secure access to individual mailboxes with user authentication and authorization features.
-- **Responsive Design:** Implemented responsive design principles for a seamless user experience across various devices and screen sizes.
-
-## Getting Started
-
-To run this project locally, follow these steps:
-
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/sheelganvir/gmail-clone.git
-   cd gmail-clone
-2. **Install Dependencies:**
+## Running locally
+1. Install dependencies:
    ```bash
    npm install
-3. **Set Up MongoDB:**
-   Create a MongoDB database and configure the connection string in the `.env` file.
-4. **Run the Application:**
-   ```bash'
+   cd client
+   npm install
+   ```
+2. Create `.env` (both root and `client/` if needed) with your Mongo connection string.
+3. Start the backend server:
+   ```bash
+   npm run dev
+   ```
+4. In another shell, start the React client:
+   ```bash
+   cd client
    npm start
-5. **Open in Browser:**
-   Open your browser and go to http://localhost:8000 to access the Gmail-Clone application.
+   ```
 
-## How to Contribute 🚀
+The client automatically seeds the inbox (13 emails) once you log in, then keeps delivering new offers in the background. You can accept/reject, watch the confetti or letter animation, and enjoy the positivity.
 
-1. Fork this repository.
-2. Clone the forked repository.
-   ```bash
-   git clone https://github.com/sheelganvir/gmail-clone
-3. Navigate to the project directory.
-   ```bash
-   cd gmail-clone
-4. Create a new folder with your project name inside gmail-clone and add your project files (e.g., index.html, style.css, script.js) inside that folder.
-5. Add a README file in your project folder that consists of descriptions/screenshots about your project.
-6. Create a new branch.
-   ```bash
-   git checkout -b <your_branch_name>
-7. Add and commit your changes.
-   ```bash
-   git add .
-   git commit -m "<your_commit_message>"
-8. Push your local branch to the remote repository.
-   ```bash
-   git push -u origin <your_branch_name>
-9. Create a Pull Request!
-   Congratulations! You've made your contribution to the Gmail-Clone project.
-   
-## Project Maintainer
+## Next steps
+- Add persistent user state so accepted/rejected counts survive reloads.
+- Wire up real email sending in `SideBarContent` when compose actually matters.
+- Add accessibility improvements for the immersive celebration animations.
 
-<table>
-<tr>
-<td align="center"><a href="https://github.com/sheelganvir"><img src="https://avatars.githubusercontent.com/u/128175450?v=4" width=150px height=150px /></a></br> <h4 style="color:red;">Sheel Ganvir</h4>
-<a href="https://www.linkedin.com/in/sheel-ganvir/"><img src="https://media.licdn.com/dms/image/D4D03AQGWHsXNJiJ3cQ/profile-displayphoto-shrink_400_400/0/1672478857882?e=1709164800&v=beta&t=5dufWD4HoEGggDTL3KC2WyWS7UBRXJFLn2ZG3hFzLLY" width="32px" height="32px"></a></td>
-</tr>
-</table>
-Feel free to reach out to the maintainer for any questions or concerns.
-
-## License
-This project is licensed under the MIT License.
-
-## Happy Coding! ✨
-
-   
-
-
+YesMail is a small act of joy for an exhausting moment; keep iterating so it stays fun.
