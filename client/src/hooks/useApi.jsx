@@ -7,7 +7,6 @@ const useApi = (urlObject) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const call = async (payload, type = '') => {
-        setResponse(null);
         setIsLoading(true);
         setError("");
         

@@ -6,7 +6,7 @@ const Component = styled(Box)({
     flexDirection: 'column',
     width: '100%',
     alignItems: 'center',
-    marginTop: 50,
+    marginTop: 8,
     opacity: .8,
 });
 
@@ -18,8 +18,10 @@ const StyledDivider = styled(Divider)({
 const NoMails = ({ message }) => {
     return (
         <Component>
-            <Typography>{message.heading}</Typography>
-            <Typography>{message.subHeading}</Typography>
+            <Typography sx={{ fontWeight: 600 }}>{message.heading}</Typography>
+            <Typography sx={{ maxWidth: 520, textAlign: 'center', whiteSpace: 'pre-line' }}>
+                {message.subHeading}
+            </Typography>
             <StyledDivider />
         </Component>
     )

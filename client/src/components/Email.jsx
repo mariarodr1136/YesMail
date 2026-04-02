@@ -1,16 +1,22 @@
 
 
-import { ListItem, Checkbox, Typography, Box, styled } from "@mui/material";
-import { StarBorder, Star } from '@mui/icons-material';
+import { ListItem, Checkbox, Typography, Box, Button, IconButton, styled } from "@mui/material";
+import Tooltip from '@mui/material/Tooltip';
+import { useEffect, useState } from 'react';
+import { StarBorder, Star, DeleteOutline, MarkEmailUnread } from '@mui/icons-material';
 import useApi from '../hooks/useApi';
 import { API_URLS } from "../services/api.urls";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../routes/routes";
 
-const Wrapper = styled(ListItem)`
+const Wrapper = styled(ListItem, {
+    shouldForwardProp: (prop) => prop !== 'animate'
+})`
     padding: 0 0 0 10px;
     background: #f2f6fc;
     cursor: pointer;
+    will-change: transform, opacity;
+    animation: ${props => props.animate ? 'slideIn 0.45s ease-in-out' : 'none'};
     & > div {
         display: flex;
         width: 100%
@@ -18,15 +24,68 @@ const Wrapper = styled(ListItem)`
     & > div > p {
         font-size: 14px;
     }
+    .row-actions {
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+    }
+    &:hover .row-actions {
+        opacity: 1;
+    }
+    @keyframes slideIn {
+        0% {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 `;
 
-const Indicator = styled(Typography)`
-    font-size: 12px !important;
-    background: #ddd;
-    color: #222;
-    border-radius: 4px;
-    margin-right: 6px;
-    padding: 0 4px;
+const Actions = styled(Box)`
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+`;
+
+const StatusTag = styled(Box)`
+    border-radius: 12px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    min-width: 90px;
+    text-align: center;
+    background: ${({ type }) => (type === 'accepted' ? '#0f9d58' : '#d93025')};
+`;
+
+const ActionButton = styled(Button)`
+    text-transform: none;
+    font-size: 12px;
+    padding: 2px 10px;
+    min-height: 24px;
+`;
+
+const AcceptButton = styled(ActionButton)`
+    border-color: #1e8e3e;
+    color: #1e8e3e;
+    &:hover {
+        background: #e6f4ea;
+        border-color: #188038;
+    }
+`;
+
+const RejectButton = styled(ActionButton)`
+    border-color: #d93025;
+    color: #d93025;
+    &:hover {
+        background: #fce8e6;
+        border-color: #c5221f;
+    }
 `;
 
 const Date = styled(Typography)({
@@ -36,15 +95,49 @@ const Date = styled(Typography)({
     color: '#5F6368'
 })
 
-const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails }) => {
+const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAccept, onReject }) => {
     const toggleStarredEmailService = useApi(API_URLS.toggleStarredMails);
+    const moveToBinService = useApi(API_URLS.moveEmailsToBin);
+    const markUnreadService = useApi(API_URLS.markUnread);
     
     const navigate = useNavigate();
+    const isInboxLike = email.bin === true || ['inbox', 'accepted', 'rejected'].includes(email.type);
+    const fromName = email.name || email.from?.split('@')[0] || 'Recruiter';
+    const [animate, setAnimate] = useState(Boolean(email.isNew));
+
+    useEffect(() => {
+        if (email.isNew) {
+            email.isNew = false;
+            setAnimate(true);
+            const timer = setTimeout(() => setAnimate(false), 500);
+            return () => clearTimeout(timer);
+        }
+    }, [email]);
+
+    const openEmail = () => {
+        if (!email.read) {
+            email.read = true;
+            setStarredEmail(prevState => !prevState);
+        }
+        navigate(routes.view.path, { state: { email: email }});
+    };
 
     const toggleStarredEmail = () => {
         toggleStarredEmailService.call({ id: email._id, value: !email.starred });
         setStarredEmail(prevState => !prevState);
     }
+
+    const handleTrash = async (e) => {
+        e.stopPropagation();
+        await moveToBinService.call([email._id]);
+        setStarredEmail(prevState => !prevState);
+    };
+
+    const handleMarkUnread = async (e) => {
+        e.stopPropagation();
+        await markUnreadService.call({ id: email._id });
+        setStarredEmail(prevState => !prevState);
+    };
 
     const handleChange = () => {
         if (selectedEmails.includes(email._id)) {
@@ -54,8 +147,16 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails }) =>
         }
     }
 
+    const listBackground = email.status === 'accepted'
+        ? '#e8f5ea'
+        : email.status === 'rejected'
+            ? '#fcebea'
+            : email.read
+                ? '#ffffff'
+                : '#f2f6fc';
+
     return (
-        <Wrapper>
+        <Wrapper animate={animate} style={{ background: listBackground }}>
             <Checkbox 
                 size="small" 
                 checked={selectedEmails.includes(email._id)}
@@ -63,18 +164,44 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails }) =>
             />
             { 
                 email.starred ? 
-                    <Star fontSize="small" style={{ marginRight: 10 }} onClick={() => toggleStarredEmail()} />
+                    <Star fontSize="small" style={{ marginRight: 10, color: '#f6b400' }} onClick={() => toggleStarredEmail()} />
                 : 
                     <StarBorder fontSize="small" style={{ marginRight: 10 }} onClick={() => toggleStarredEmail()} /> 
             }
-            <Box onClick={() => navigate(routes.view.path, { state: { email: email }})}>
-                <Typography style={{ width: 200 }}>To:{email.to.split('@')[0]}</Typography>
-                <Indicator>Inbox</Indicator>
-                <Typography>{email.subject} {email.body && '-'} {email.body}</Typography>
-                <Date>
-                    {(new window.Date(email.date)).getDate()}&nbsp;
-                    {(new window.Date(email.date)).toLocaleString('default', { month: 'long' })}
-                </Date>
+            <Box onClick={openEmail} sx={{ display: 'flex', width: '100%', alignItems: 'center' }}>
+                <Typography style={{ width: 220 }}>
+                    {isInboxLike ? fromName : `To:${email.to.split('@')[0]}`}
+                </Typography>
+                <Typography>{email.subject}</Typography>
+                <Actions className="row-actions" onClick={(e) => e.stopPropagation()}>
+                    {(email.status === 'accepted' || email.status === 'rejected') ? (
+                        <StatusTag type={email.status}>
+                            {email.status === 'accepted' ? 'Accepted' : 'Rejected'}
+                        </StatusTag>
+                    ) : (
+                        <>
+                            <AcceptButton variant="outlined" size="small" onClick={(e) => onAccept?.(email._id, e)}>
+                                Accept
+                            </AcceptButton>
+                            <RejectButton variant="outlined" size="small" onClick={(e) => onReject?.(email._id, e)}>
+                                Decline
+                            </RejectButton>
+                        </>
+                    )}
+                    <Tooltip title="Trash" arrow componentsProps={{ tooltip: { sx: { borderRadius: '5px' } } }}>
+                        <IconButton size="small" onClick={handleTrash}>
+                            <DeleteOutline fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Mark as unread" arrow componentsProps={{ tooltip: { sx: { borderRadius: '5px' } } }}>
+                        <IconButton size="small" onClick={handleMarkUnread}>
+                            <MarkEmailUnread fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Date>
+                        {(new window.Date(email.date)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </Date>
+                </Actions>
             </Box>
         </Wrapper>
     )

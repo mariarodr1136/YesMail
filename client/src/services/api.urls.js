@@ -22,5 +22,21 @@ export const API_URLS = {
     moveEmailsToBin: {
         endpoint: 'bin',
         method: 'POST'
+    },
+    readAll: {
+        endpoint: 'read-all',
+        method: 'POST'
+    },
+    acceptOffer: {
+        endpoint: 'accept',
+        method: 'POST'
+    },
+    rejectOffer: {
+        endpoint: 'reject',
+        method: 'POST'
+    },
+    markUnread: {
+        endpoint: 'mark-unread',
+        method: 'POST'
     }
 }

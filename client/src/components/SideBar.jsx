@@ -8,7 +8,6 @@ const StyledDrawer = styled(Drawer)`
 `
 
 const SideBar = ({ toggleDrawer, openDrawer }) => {
-
     return (
         <StyledDrawer
             anchor='left'
@@ -23,7 +22,7 @@ const SideBar = ({ toggleDrawer, openDrawer }) => {
                 '& .MuiDrawer-paper': { 
                     width: 250,
                     borderRight: 'none',
-                    background: '#f5F5F5',
+                    background: '#F8FAFD',
                     marginTop: '64px',
                     height: 'calc(100vh - 64px)'
                 },
