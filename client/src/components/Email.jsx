@@ -240,8 +240,8 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
                             {email.status === 'accepted' ? 'Accepted' : 'Rejected'}
                         </StatusTag>
                     ) : null}
-                    <Date sx={{ fontWeight: isUnread ? 700 : 400 }}>
-                        {(new window.Date(email.date)).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    <Date sx={{ fontWeight: isUnread ? 700 : 400, color: isUnread ? '#202124' : '#5F6368' }}>
+                        {(new window.Date(email.date)).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
                     </Date>
                 </RightMeta>
 
