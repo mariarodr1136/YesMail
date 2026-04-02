@@ -106,6 +106,11 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
     const category = email.category || 'primary';
     const isOfferEmail = email.type === 'inbox' && category === 'primary';
     const [animate, setAnimate] = useState(Boolean(email.isNew));
+    const isUnread = !email.read;
+    const preview = (email.body || '')
+        .replace(/\s+/g, ' ')
+        .trim()
+        .slice(0, 80);
 
     useEffect(() => {
         if (email.isNew) {
@@ -154,8 +159,8 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
         : email.status === 'rejected'
             ? '#fcebea'
             : email.read
-                ? '#ffffff'
-                : '#f2f6fc';
+                ? '#f2f6fc'
+                : '#ffffff';
 
     return (
         <Wrapper animate={animate} style={{ background: listBackground }}>
@@ -171,10 +176,33 @@ const Email = ({ email, setStarredEmail, selectedEmails, setSelectedEmails, onAc
                     <StarBorder fontSize="small" style={{ marginRight: 10 }} onClick={() => toggleStarredEmail()} /> 
             }
             <Box onClick={openEmail} sx={{ display: 'flex', width: '100%', alignItems: 'center' }}>
-                <Typography style={{ width: 220 }}>
+                <Typography
+                    sx={{
+                        width: 220,
+                        fontWeight: isUnread ? 700 : 400,
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                    }}
+                >
                     {isInboxLike ? fromName : `To:${email.to.split('@')[0]}`}
                 </Typography>
-                <Typography>{email.subject}</Typography>
+                <Typography
+                    sx={{
+                        minWidth: 0,
+                        fontWeight: isUnread ? 700 : 400,
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                    }}
+                >
+                    {email.subject}
+                    {preview && (
+                        <Box component="span" sx={{ fontWeight: 400, color: '#5f6368' }}>
+                            {` — ${preview}${(email.body || '').trim().length > 80 ? '…' : ''}`}
+                        </Box>
+                    )}
+                </Typography>
                 <Actions className="row-actions" onClick={(e) => e.stopPropagation()}>
                     {(email.status === 'accepted' || email.status === 'rejected') ? (
                         <StatusTag type={email.status}>
