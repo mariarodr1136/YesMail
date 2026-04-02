@@ -1,4 +1,4 @@
-# YesMail 📩📬
+# YesMail 📩
 
 ![Node.js](https://img.shields.io/badge/Node.js-Backend-339933) ![Express](https://img.shields.io/badge/Express-Server-000000) ![React](https://img.shields.io/badge/React-Frontend-61DAFB) ![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248) ![Material UI](https://img.shields.io/badge/MUI-UI_Components-007FFF) ![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animations-0055FF)
 
